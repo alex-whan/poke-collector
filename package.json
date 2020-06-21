@@ -1,0 +1,26 @@
+{
+  "name": "pokecollector",
+  "version": "1.0.0",
+  "description": "pokecollector",
+  "main": "server.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha _tests/nightmare.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "8.2.0",
+    "ejs": "3.0.2",
+    "express": "4.17.1",
+    "pg": "8.0.2",
+    "superagent": "5.2.2"
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "mocha": "7.1.1",
+    "nightmare": "3.0.2",
+    "start-server-and-test": "1.11.0"
+  }
+}

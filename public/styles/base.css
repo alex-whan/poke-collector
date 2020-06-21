@@ -1,0 +1,17 @@
+* {
+  border-style: border-box;
+  font-family: 'Press Start 2P', cursive;
+}
+
+body {
+  background-color: #F8F8F8;
+}
+
+main {
+  margin: 0 auto;
+}
+
+img {
+  max-height: 100px;
+}
+

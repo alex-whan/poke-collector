@@ -1,0 +1,107 @@
+* {
+  border-style: border-box;
+  flex-direction: column;
+}
+
+body {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+footer {
+  clear: both;
+  display: flex;
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+ul {
+  flex-wrap: wrap;
+}
+
+header {
+  background-color: #D95838;
+  padding: 20px;
+  color: white;
+  font-family: 'Press Start 2P', cursive;
+  border-bottom: solid #485150 5px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bolder;
+  display: flex;
+  text-align: center;
+  padding: 10px;
+}
+
+h2 {
+  text-transform:capitalize;
+  font-size: 1.5em;
+  margin: 10px;
+}
+
+#poke-card {
+  align-content: center;
+  background-color: #485150;
+  border: solid black 2px;
+  border-radius: 10px;
+  box-shadow: 3px 3px 5px black;
+  flex-wrap: wrap;
+  margin: 20px;
+  padding: 10px;
+}
+
+li > * {
+  background-color: #485150;
+  color: white;
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 3px;
+  margin: 5px;
+}
+
+.ball {
+  height: 30px;
+  width: 30px;
+  background-color: #F8F8F8;
+  border-radius: 50%;
+  border: solid #485150 3px;
+  margin-left: 45%;
+  position: absolute;
+  text-align: center;
+  z-index: 10;
+}
+
+a {
+  border: solid #485150 3px;
+  border-radius: 10px;
+  margin: 30px;
+  padding: 10px;
+  text-decoration: none;
+}
+
+#error {
+  border: solid #485150 3px;
+  border-radius: 10px;
+  margin: 30px;
+  padding: 10px;
+  text-transform: initial;
+}
+
+#favorites {
+  border: solid #485150 3px;
+  border-radius: 10px;
+  /* margin: 30px; */
+  padding: 10px;
+}
+
