@@ -6,7 +6,7 @@
 
 This is a full-stack application using [PokeAPI](https://pokeapi.co/).
 
-Check out the live link for Poke Collector [here](https://alex-whan.github.io/poke-collector/)! 
+Check out the live link for Poke Collector [here](https://poke-collector.herokuapp.com/)! 
 
 ## Credits and Collaborations
 
