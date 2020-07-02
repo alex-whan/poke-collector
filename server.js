@@ -6,7 +6,9 @@ const express = require('express');
 const superagent = require('superagent');
 const { response } = require('express');
 const pg = require('pg');
+// const { delete } = require('superagent');
 require('ejs');
+const methodOverride = require('method-override');
 
 // Application Setup
 const app = express();
@@ -16,16 +18,18 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({extended: true}));
 app.use('/public', express.static('public'));
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 
 // Routes
 app.get('/', getListOfAllPokemon);
 app.post('/add', addPokemonToFavorites);
 app.get('/favorites', showFavoritePokemon);
+app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
 function getListOfAllPokemon(request, response) {
-  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20';
+  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
   superagent.get(url) // may need query params below
     .then(resultsFromSuperagent => {
       let pokemonResultsArray = resultsFromSuperagent.body.results;
@@ -35,19 +39,19 @@ function getListOfAllPokemon(request, response) {
       sortPokemon(finalPokemonArray);
       response.status(200).render('pages/show.ejs', {
         pokemonToShow: finalPokemonArray});
-    }).catch();
+    }).catch(error => console.log(error));
 }
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
   let name = request.body.name;
-  let sql = 'INSERT INTO pokemon (name) VALUES ($1);';
+  let sql = 'INSERT INTO pokemon (name) VALUES ($1) RETURNING id;';
   let safeValues = [name];
 
   client.query(sql, safeValues)
     .then(sqlResults => {
       response.status(200).redirect('/');
-    }).catch();
+    }).catch(error => console.log(error));
 }
 
 // showFavoritePokemon handler - shows list of favorite Pokemon added to database
@@ -58,7 +62,19 @@ function showFavoritePokemon(request, response) {
       let pokemon = sqlResults.rows;
       response.status(200).render('pages/favorites.ejs',
       {favoritePokemon: pokemon});
-    }).catch();
+    }).catch(error => console.log(error));
+}
+
+// deletePokemonFromFavorites handler - deletes entry from list of favorites in database
+function deletePokemonFromFavorites(request, response){
+  let pokemonID = request.params.id;
+  console.log('This is my POKEMON ID: ', request.params.id);
+  let sql = 'DELETE FROM pokemon WHERE id=$1;';
+  let safeValues = [pokemonID];
+  client.query(sql, safeValues)
+    .then(() => {
+      response.status(200).redirect('/favorites')
+    }).catch(error => console.log(error));
 }
 
 // Error - 404 Not Found page
@@ -89,5 +105,5 @@ client.connect()
     app.listen(PORT, () => {
       console.log(`Listening on ${PORT}`);
     })
-  }).catch();
+  }).catch(error => console.log(error));
 
