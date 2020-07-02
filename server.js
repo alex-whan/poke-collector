@@ -25,7 +25,7 @@ app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
 function getListOfAllPokemon(request, response) {
-  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=20';
+  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
   superagent.get(url) // may need query params below
     .then(resultsFromSuperagent => {
       let pokemonResultsArray = resultsFromSuperagent.body.results;
