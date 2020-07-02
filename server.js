@@ -24,7 +24,7 @@ app.use(methodOverride('_method'));
 app.get('/', getListOfAllPokemon);
 app.post('/add', addPokemonToFavorites);
 app.get('/favorites', showFavoritePokemon);
-app.delete('/favorites', deletePokemonFromFavorites);
+app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
@@ -39,7 +39,7 @@ function getListOfAllPokemon(request, response) {
       sortPokemon(finalPokemonArray);
       response.status(200).render('pages/show.ejs', {
         pokemonToShow: finalPokemonArray});
-    }).catch();
+    }).catch(error => console.log(error));
 }
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
@@ -51,7 +51,7 @@ function addPokemonToFavorites(request, response) {
   client.query(sql, safeValues)
     .then(sqlResults => {
       response.status(200).redirect('/');
-    }).catch();
+    }).catch(error => console.log(error));
 }
 
 // showFavoritePokemon handler - shows list of favorite Pokemon added to database
@@ -62,18 +62,19 @@ function showFavoritePokemon(request, response) {
       let pokemon = sqlResults.rows;
       response.status(200).render('pages/favorites.ejs',
       {favoritePokemon: pokemon});
-    }).catch();
+    }).catch(error => console.log(error));
 }
 
 // deletePokemonFromFavorites handler - deletes entry from list of favorites in database
 function deletePokemonFromFavorites(request, response){
   let pokemonID = request.params.id;
+  console.log('This is my POKEMON ID: ', request.params.id);
   let sql = 'DELETE FROM pokemon WHERE id=$1;';
   let safeValues = [pokemonID];
   client.query(sql, safeValues)
     .then(() => {
       response.status(200).redirect('/favorites')
-    }).catch();
+    }).catch(error => console.log(error));
 }
 
 // Error - 404 Not Found page
@@ -104,5 +105,5 @@ client.connect()
     app.listen(PORT, () => {
       console.log(`Listening on ${PORT}`);
     })
-  }).catch();
+  }).catch(error => console.log(error));
 
