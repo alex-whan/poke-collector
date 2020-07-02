@@ -6,7 +6,7 @@ const express = require('express');
 const superagent = require('superagent');
 const { response } = require('express');
 const pg = require('pg');
-const { delete } = require('superagent');
+// const { delete } = require('superagent');
 require('ejs');
 const methodOverride = require('method-override');
 
@@ -45,7 +45,7 @@ function getListOfAllPokemon(request, response) {
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
   let name = request.body.name;
-  let sql = 'INSERT INTO pokemon (name) VALUES ($1);';
+  let sql = 'INSERT INTO pokemon (name) VALUES ($1) RETURNING id;';
   let safeValues = [name];
 
   client.query(sql, safeValues)
@@ -62,6 +62,17 @@ function showFavoritePokemon(request, response) {
       let pokemon = sqlResults.rows;
       response.status(200).render('pages/favorites.ejs',
       {favoritePokemon: pokemon});
+    }).catch();
+}
+
+// deletePokemonFromFavorites handler - deletes entry from list of favorites in database
+function deletePokemonFromFavorites(request, response){
+  let pokemonID = request.params.id;
+  let sql = 'DELETE FROM pokemon WHERE id=$1;';
+  let safeValues = [pokemonID];
+  client.query(sql, safeValues)
+    .then(() => {
+      response.status(200).redirect('/favorites')
     }).catch();
 }
 
