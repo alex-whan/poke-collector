@@ -6,7 +6,9 @@ const express = require('express');
 const superagent = require('superagent');
 const { response } = require('express');
 const pg = require('pg');
+const { delete } = require('superagent');
 require('ejs');
+const methodOverride = require('method-override');
 
 // Application Setup
 const app = express();
@@ -16,11 +18,13 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({extended: true}));
 app.use('/public', express.static('public'));
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 
 // Routes
 app.get('/', getListOfAllPokemon);
 app.post('/add', addPokemonToFavorites);
 app.get('/favorites', showFavoritePokemon);
+app.delete('/favorites', deletePokemonFromFavorites);
 app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
