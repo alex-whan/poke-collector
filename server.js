@@ -29,7 +29,7 @@ app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
 function getListOfAllPokemon(request, response) {
-  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=10';
+  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
   superagent.get(url) // may need query params below
     .then(resultsFromSuperagent => {
       let pokemonResultsArray = resultsFromSuperagent.body.results;
@@ -50,9 +50,9 @@ function addPokemonToFavorites(request, response) {
     .then(nameResults => {
       if(nameResults.rowCount < 1) {
 
-        let name = request.body.name;
-        let sql = 'INSERT INTO pokemon (name) VALUES ($1) RETURNING id;';
-        let safeValues = [name];
+        let { name, url, pokedex_number, image } = request.body;
+        let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image) VALUES ($1, $2, $3, $4) RETURNING id;';
+        let safeValues = [name, url, pokedex_number, image];
       
         client.query(sql, safeValues)
           .then(sqlResults => {
@@ -97,8 +97,8 @@ function Pokemon(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
   this.name = info.name ? info.name : 'Name not available.';
   this.url = info.url ? info.url : 'URL not available.';
-  this.pokedexNumber = this.url.split('/')[this.url.split('/').length - 2];
-  this.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedexNumber}.png` ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedexNumber}.png` : placeholderImage;
+  this.pokedex_number = this.url.split('/')[this.url.split('/').length - 2];
+  this.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedex_number}.png` ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedex_number}.png` : placeholderImage;
 };
 
 // Helper function
