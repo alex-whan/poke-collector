@@ -7,9 +7,9 @@
         <% pokemonToShow.forEach(pokemon => { %>
           <li id="poke-card">
             <form action="/add" method="post">
+              <h3>#<%= pokemon.pokedexNumber %></h3>
               <h2><%= pokemon.name %></h2>
               <img class="front-sprite" src="<%= pokemon.image %>" alt="<%= pokemon.name %>" />
-              <h3><%= pokemon.pokedexNumber %></h3>
                 <input type=hidden name="name" value="<%= pokemon.name %>"></input>
                 <button>Add To Favorites</button>
               </form>

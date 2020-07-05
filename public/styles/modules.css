@@ -52,4 +52,9 @@
     z-index: 10;
   }
 
+  .front-sprite {
+    max-height: 100px;
+    max-width: 100px;
+  }
+
 }
