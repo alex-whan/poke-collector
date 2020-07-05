@@ -101,8 +101,6 @@ function Pokemon(info){
   this.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedexNumber}.png` ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedexNumber}.png` : placeholderImage;
 };
 
-// Img 
-
 // Helper function
 const sortPokemon = (arr) => {
   arr.sort((a, b) => {
