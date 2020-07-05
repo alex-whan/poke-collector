@@ -29,7 +29,7 @@ app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
 function getListOfAllPokemon(request, response) {
-  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
+  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=10';
   superagent.get(url) // may need query params below
     .then(resultsFromSuperagent => {
       let pokemonResultsArray = resultsFromSuperagent.body.results;
@@ -95,10 +95,13 @@ function notFound(request, response){
 // Pokemon Constructor function
 function Pokemon(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
-  this.name = info.name;
-  this.image = placeholderImage;
-  this.url = info.url;
+  this.name = info.name ? info.name : 'Name not available.';
+  this.url = info.url ? info.url : 'URL not available.';
+  this.pokedexNumber = this.url.split('/')[this.url.split('/').length - 2];
+  this.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedexNumber}.png` ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedexNumber}.png` : placeholderImage;
 };
+
+// Img 
 
 // Helper function
 const sortPokemon = (arr) => {
