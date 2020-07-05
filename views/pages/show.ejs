@@ -10,7 +10,10 @@
               <h3>#<%= pokemon.pokedex_number %></h3>
               <h2><%= pokemon.name %></h2>
               <img class="front-sprite" src="<%= pokemon.image %>" alt="<%= pokemon.name %>" />
+                <input type=hidden name="pokedex_number" value="<%= pokemon.pokedex_number %>"></input>
+                <input type=hidden name="url" value="<%= pokemon.url %>"></input>
                 <input type=hidden name="name" value="<%= pokemon.name %>"></input>
+                <input type=hidden name="image" value="<%= pokemon.image %>"></input>
                 <button>Add To Favorites</button>
               </form>
             </li>

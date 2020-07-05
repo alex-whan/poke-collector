@@ -45,11 +45,12 @@ function getListOfAllPokemon(request, response) {
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
   let nameCheck = 'SELECT * FROM pokemon WHERE name=$1;';
-  let nameSafeValues = [request.body.name];
+  let nameSafeValues = [request.body];
   client.query(nameCheck, nameSafeValues)
     .then(nameResults => {
       if(nameResults.rowCount < 1) {
 
+        // console.log('MY REQUEST BODY:', request.body)
         let { name, url, pokedex_number, image } = request.body;
         let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image) VALUES ($1, $2, $3, $4) RETURNING id;';
         let safeValues = [name, url, pokedex_number, image];
