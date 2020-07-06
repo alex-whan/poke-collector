@@ -58,18 +58,25 @@ app.use('*', notFound);
 
 function getListOfAllPokemon(request, response) {
   let finalPokemonArray = [];
-  for(let i = 1; i <= 3; i++){
+  for(let i = 1; i <= 6; i++){
     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
     superagent.get(url) // may need query params below
     .then(resultsFromSuperagent => {
+      ////// TESTING COMMENTS //////
       console.log(`THIS IS MY RESULT at ${i}: `, resultsFromSuperagent.body.name);
       console.log(`THIS IS MY TYPE 1: `, resultsFromSuperagent.body.types[0].type.name);
-      console.log(`THIS IS MY TYPE 2: `, resultsFromSuperagent.body.types[1].type.name);
+      if(resultsFromSuperagent.body.types.length > 1){
+        console.log(`THIS IS MY TYPE 2: `, resultsFromSuperagent.body.types[1].type.name);
+      } else {
+        console.log(`THIS IS MY TYPE 2: none`);
+      }
+      ////// TESTING COMMENTS //////
+
       // let pokemonResultsArray = resultsFromSuperagent.body;
       // const finalPokemonArray = resultsFromSuperagent.body.map(pokemon => {
       //   return new Pokemon(pokemon);
       // });
-      const pokemonToDisplay = new Pokemon(resultsFromSuperagent.body);
+      let pokemonToDisplay = new Pokemon(resultsFromSuperagent.body);
       console.log('THIS IS MY POKEMON TO DISPLAY: ', pokemonToDisplay);
       finalPokemonArray.push(pokemonToDisplay);
       }).catch(error => console.log(error));
@@ -140,7 +147,11 @@ function Pokemon(info){
   this.pokedex_number = this.url.split('/')[this.url.split('/').length - 2];
   this.image = info.sprites.front_default ? info.sprites.front_default : placeholderImage;
   this.type1 = info.types[0].type.name ? info.types[0].type.name : 'Type 1 not available.';
-  this.type2 = info.types[1].type.name ? info.types[1].type.name : 'Type 2 not available.';
+  if(info.types.length > 1){ // checks to see if Pokemon has a second type
+    this.type2 = info.types[1].type.name ? info.types[1].type.name : 'Type 2 not available.';
+  } else {
+    this.type2 = null;
+  }
 };
 
 // Helper function
