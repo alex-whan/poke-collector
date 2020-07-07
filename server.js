@@ -28,61 +28,19 @@ app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
-// function getListOfAllPokemon(request, response) {
-//   let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
-//   superagent.get(url) // may need query params below
-//     .then(resultsFromSuperagent => {
-//       let pokemonResultsArray = resultsFromSuperagent.body.results;
-//       const finalPokemonArray = pokemonResultsArray.map(pokemon => {
-//         return new Pokemon(pokemon);
-//       });
-//       sortPokemon(finalPokemonArray);
-//       response.status(200).render('pages/show.ejs', {
-//         pokemonToShow: finalPokemonArray});
-//     }).catch(error => console.log(error));
-// }
-
-// function getListOfAllPokemon(request, response) {
-//   let promises = [];
-//   for(let i = 1; i <= 10; i++){
-//     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-//     promises.push(superagent.get(url)
-//       .then(resultsFromSuperagent => {
-//         let pokemonResultsArray = resultsFromSuperagent.map((pokemon) => {
-//           return new Pokemon(pokemon);
-//         });
-        
-//     }));
-//   }
-// }
-
-function getListOfAllPokemon(request, response) {
+async function getListOfAllPokemon(request, response) {
+  let promiseArray = [];
   let finalPokemonArray = [];
-  for(let i = 1; i <= 6; i++){
+  for(let i = 1; i <= 151; i++){
     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-    superagent.get(url) // may need query params below
-    .then(resultsFromSuperagent => {
-      ////// TESTING COMMENTS //////
-      console.log(`THIS IS MY RESULT at ${i}: `, resultsFromSuperagent.body.name);
-      console.log(`THIS IS MY TYPE 1: `, resultsFromSuperagent.body.types[0].type.name);
-      if(resultsFromSuperagent.body.types.length > 1){
-        console.log(`THIS IS MY TYPE 2: `, resultsFromSuperagent.body.types[1].type.name);
-      } else {
-        console.log(`THIS IS MY TYPE 2: none`);
-      }
-      ////// TESTING COMMENTS //////
+    promiseArray.push(superagent.get(url))
+  }
 
-      // let pokemonResultsArray = resultsFromSuperagent.body;
-      // const finalPokemonArray = resultsFromSuperagent.body.map(pokemon => {
-      //   return new Pokemon(pokemon);
-      // });
-      let pokemonToDisplay = new Pokemon(resultsFromSuperagent.body);
-      console.log('THIS IS MY POKEMON TO DISPLAY: ', pokemonToDisplay);
-      finalPokemonArray.push(pokemonToDisplay);
-      }).catch(error => console.log(error));
-    };
-    console.log('THIS IS MY FINAL ARRAY: ', finalPokemonArray);
-    sortPokemon(finalPokemonArray);
+  await Promise.all(promiseArray).then((pokemonResponses) => {
+    const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
+    finalPokemonArray = pokemon;
+  })
+
     response.status(200).render('pages/show.ejs', {
       pokemonToShow: finalPokemonArray});
   }
