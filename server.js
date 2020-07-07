@@ -39,7 +39,7 @@ async function getListOfAllPokemon(request, response) {
   await Promise.all(promiseArray).then((pokemonResponses) => {
     const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
     finalPokemonArray = pokemon;
-  })
+  }).catch(error => console.log(error));
 
   // sortPokemon(finalPokemonArray);
   response.status(200).render('pages/show.ejs', {
