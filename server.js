@@ -41,8 +41,9 @@ async function getListOfAllPokemon(request, response) {
     finalPokemonArray = pokemon;
   })
 
-    response.status(200).render('pages/show.ejs', {
-      pokemonToShow: finalPokemonArray});
+  // sortPokemon(finalPokemonArray);
+  response.status(200).render('pages/show.ejs', {
+    pokemonToShow: finalPokemonArray});
   }
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
