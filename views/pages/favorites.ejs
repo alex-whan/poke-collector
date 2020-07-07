@@ -10,6 +10,10 @@
           <h3>#<%= pokemon.pokedex_number %></h3>
           <h2><%= pokemon.name %></h2>
           <img class="front-sprite" src="<%= pokemon.image %>" alt="<%= pokemon.name %>" />
+          <div class="type-list">
+            <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type1}.png` %>" alt="<%= pokemon.type1 %>" />
+            <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type2}.png` %>" alt="<%= pokemon.type2 %>" />
+          </div>
           <div>
             <form action="/favorites/<%= pokemon.id %>?_method=DELETE" method="POST">
               <button>X</button>

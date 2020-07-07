@@ -127,3 +127,17 @@ a {
   max-height: 100px;
   max-width: 100px;
 }
+
+.type {
+  height: 30px;
+  width: auto;
+  /* width: 69px; */
+  max-height: 77px;
+  max-width: 176px;
+  margin: 2px;
+}
+
+.type-list {
+  /* align-self: flex-start; */
+  text-align: center;
+}

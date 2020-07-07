@@ -55,9 +55,9 @@ function addPokemonToFavorites(request, response) {
       if(nameResults.rowCount < 1) {
 
         // console.log('MY REQUEST BODY:', request.body)
-        let { name, url, pokedex_number, image } = request.body;
-        let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image) VALUES ($1, $2, $3, $4) RETURNING id;';
-        let safeValues = [name, url, pokedex_number, image];
+        let { name, url, pokedex_number, image, type1, type2 } = request.body;
+        let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
+        let safeValues = [name, url, pokedex_number, image, type1, type2];
       
         client.query(sql, safeValues)
           .then(sqlResults => {

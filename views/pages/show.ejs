@@ -10,10 +10,16 @@
               <h3>#<%= pokemon.pokedex_number %></h3>
               <h2><%= pokemon.name %></h2>
               <img class="front-sprite" src="<%= pokemon.image %>" alt="<%= pokemon.name %>" />
+              <div class="type-list">
+                <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type1}.png` %>" alt="<%= pokemon.type1 %>" />
+                <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type2}.png` %>" alt="<%= pokemon.type2 %>" />
+              </div>
                 <input type=hidden name="pokedex_number" value="<%= pokemon.pokedex_number %>"></input>
                 <input type=hidden name="url" value="<%= pokemon.url %>"></input>
                 <input type=hidden name="name" value="<%= pokemon.name %>"></input>
                 <input type=hidden name="image" value="<%= pokemon.image %>"></input>
+                <input type=hidden name="type1" value="<%= pokemon.type1 %>"></input>
+                <input type=hidden name="type2" value="<%= pokemon.type2 %>"></input>
                 <div class="button-div">
                   <button>Add To Favorites</button>
                 </div>
