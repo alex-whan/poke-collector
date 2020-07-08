@@ -1,9 +1,14 @@
 <%- include('../layout/head.ejs') %>
-<%- include('../layout/header.ejs') %>
 
-  <main>
+  <main class="wrapper">
+    <section class="hero">
+      <h1>Gotta Catch 'Em All!</h1>
+    </section>
+
     <a href="/favorites">See Your Favorites</a>
-      <ul class="pokedex">
+
+    <section class="pokedex" id="pokedex">
+      <ul>
         <% pokemonToShow.forEach(pokemon => { %>
           <li id="poke-card">
             <form action="/add" method="post">
@@ -28,12 +33,13 @@
                 <input type=hidden name="image" value="<%= pokemon.image %>"></input>
                 <input type=hidden name="type1" value="<%= pokemon.type1 %>"></input>
                 <input type=hidden name="type2" value="<%= pokemon.type2 %>"></input>
-                <div class="button-div">
-                  <button>Add To Favorites</button>
-                </div>
-              </form>
-            </li>
-            <% }) %>
-          </ul>
+              <div class="button-div">
+                <button>Add To Favorites</button>
+              </div>
+            </form>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
         </main>
         <%- include('../layout/footer.ejs') %>
