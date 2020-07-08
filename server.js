@@ -48,15 +48,15 @@ async function getListOfAllPokemon(request, response) {
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
-  let nameCheck = 'SELECT * FROM pokemon WHERE name=$1;';
-  let nameSafeValues = [request.body];
-  client.query(nameCheck, nameSafeValues)
-    .then(nameResults => {
-      if(nameResults.rowCount < 1) {
+  let pokedexNumberCheck = 'SELECT * FROM pokemon WHERE pokedex_number=$1;';
+  let pokedexNumberSafeValues = [request.body.pokedex_number];
+  client.query(pokedexNumberCheck, pokedexNumberSafeValues)
+    .then(pokedexNumberResults => {
+      if(pokedexNumberResults.rowCount < 1) {
 
         // console.log('MY REQUEST BODY:', request.body)
         let { name, url, pokedex_number, image, type1, type2 } = request.body;
-        let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
+        let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image, type1, type2) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
         let safeValues = [name, url, pokedex_number, image, type1, type2];
       
         client.query(sql, safeValues)
