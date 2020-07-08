@@ -5,17 +5,25 @@
 
 body {
   background-color: #F8F8F8;
+  margin: 0;
 }
 
 main {
   margin: 0 auto;
 }
 
-img {
+/* img {
   max-height: 100px;
-}
+} */
 
 title {
   display: none;
+}
+
+.pokedex {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-gap: 20px;
+  padding-inline-start: 0;
 }
 

@@ -3,16 +3,24 @@
 
   <main>
     <a href="/favorites">See Your Favorites</a>
-      <ul>
+      <ul class="pokedex">
         <% pokemonToShow.forEach(pokemon => { %>
           <li id="poke-card">
             <form action="/add" method="post">
-              <h3>#<%= pokemon.pokedex_number %></h3>
-              <h2><%= pokemon.name %></h2>
+              <div>
+                <h3>#<%= pokemon.pokedex_number %></h3>
+              </div>
+              <div>
+                <h2><%= pokemon.name %></h2>
+              </div>
+              <div>
               <img class="front-sprite" src="<%= pokemon.image %>" alt="<%= pokemon.name %>" />
+              </div>
               <div class="type-list">
                 <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type1}.png` %>" alt="<%= pokemon.type1 %>" />
+                <% if (pokemon.type2){ %>
                 <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type2}.png` %>" alt="<%= pokemon.type2 %>" />
+                <% } %>
               </div>
                 <input type=hidden name="pokedex_number" value="<%= pokemon.pokedex_number %>"></input>
                 <input type=hidden name="url" value="<%= pokemon.url %>"></input>

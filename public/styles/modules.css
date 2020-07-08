@@ -53,8 +53,14 @@
   }
 
   .front-sprite {
-    max-height: 100px;
-    max-width: 100px;
+    height: 120px;
+    width: 120px;
+  }
+
+  .type {
+    height: 44px;
+    width: 100px;
+    margin: 1px;
   }
 
 }

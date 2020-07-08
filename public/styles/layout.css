@@ -20,9 +20,9 @@ main {
   text-align: center;
 }
 
-ul {
+/* ul {
   flex-wrap: wrap;
-}
+} */
 
 header {
   background-color: #D95838;
@@ -43,7 +43,7 @@ h1 {
 
 h2 {
   text-transform:capitalize;
-  font-size: 1.5em;
+  font-size: 1em;
   margin: 10px;
 }
 
@@ -54,7 +54,7 @@ h2 {
   border-radius: 10px;
   box-shadow: 3px 3px 5px black;
   flex-wrap: wrap;
-  margin: 20px;
+  margin: 0 auto;
   padding: 10px;
   text-align: center;
 }
@@ -72,17 +72,17 @@ button {
   cursor: pointer;
 }
 
-/* button:hover{
+button:hover{
   transform: translateY(2px);
-} */
+}
 
 button:active{
   transform: translateY(4px);
 }
 
-/* a:hover{
+a:hover{
   transform: translateY(2px);
-} */
+}
 
 a:active{
   transform: translateY(4px);
@@ -124,20 +124,24 @@ a {
 }
 
 .front-sprite {
-  max-height: 100px;
-  max-width: 100px;
+  max-height: 120px;
+  max-width: 120px;
 }
 
 .type {
-  height: 30px;
-  width: auto;
-  /* width: 69px; */
-  max-height: 77px;
-  max-width: 176px;
-  margin: 2px;
+  height: 44px;
+  width: 100px;
+  /* max-height: 77px;
+  max-width: 176px; */
+  margin: 1px;
 }
 
 .type-list {
   /* align-self: flex-start; */
+  margin: 0 auto;
   text-align: center;
+}
+
+div {
+  display: block;
 }
