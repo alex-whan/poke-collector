@@ -47,6 +47,10 @@ h2 {
   margin: 10px;
 }
 
+h3 {
+  font-size: 1em;
+}
+
 #poke-card {
   align-content: center;
   background-color: #485150;
@@ -124,24 +128,28 @@ a {
 }
 
 .front-sprite {
-  max-height: 120px;
-  max-width: 120px;
+  height: 120px;
+  width: 120px;
 }
 
 .type {
-  height: 44px;
-  width: 100px;
+  height: 40px;
+  width: 90px;
   /* max-height: 77px;
   max-width: 176px; */
-  margin: 1px;
+  margin: 0 auto;
 }
 
 .type-list {
   /* align-self: flex-start; */
+  align-items: center;
   margin: 0 auto;
   text-align: center;
 }
 
 div {
+  border: 2px red solid;
+  align-items: center;
   display: block;
+  text-align: center;
 }
