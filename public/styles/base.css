@@ -4,27 +4,177 @@
 }
 
 body {
-  background-color: #F8F8F8;
-  margin: 0;
+  background-color: #EAEAEB;
 }
 
 main {
   margin: 0 auto;
+  background-color: #EAEAEB;
 }
 
-/* img {
-  max-height: 100px;
-} */
+div {
+  border-radius: 10px;
+  text-align: center;
+}
 
-title {
-  display: none;
+html {
+  scroll-behavior: smooth;
+}
+
+header > * {
+  border-style: border-box;
+  font-family: 'Press Start 2P', cursive;
+}
+
+header > .hero {
+  background: url("../assets/images/pokeball-wallpaper.png") center;
+  background-size: cover;
+  padding: 4rem 2rem;
+
+  display: grid;
+  align-self: center;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+header > .hero > h1 {
+  text-align: center;
+  font-size: 4rem;
+  padding-bottom: 1rem;
+  text-shadow: 2px 2px #F8F8F8;
 }
 
 .pokedex {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  grid-gap: 20px;
-  align-items: center;
-  padding-inline-start: 0;
+  padding: 2rem;
+  max-width: 960px;
+  background-color: inherit;
+  margin: 0 auto;
+  /* padding-inline-start: 0; */
 }
+
+.pokedex > ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* grid-template-columns: repeat(auto-fit, minmax(240px, 1 fr)); */
+  grid-gap: 1rem;
+}
+
+.pokedex > ul > li {
+  align-content: center;
+  background-color: #485150;
+  border: 2px solid black;
+  border-radius: 0.75rem;
+  box-shadow: 3px 3px 5px black;
+  color: white;
+  margin: 0 auto;
+  margin: 0.75rem;
+  min-width: 280px;
+  width: 290px;
+}
+
+.pokedex > ul > li > div {
+  text-align: center;
+}
+
+.pokedex > ul > li > div > img {
+  width: 10rem;
+  height: 10rem;
+  margin: inherit;
+}
+
+.pokedex > ul > li > div > img.type {
+  height: 40px;
+  width: 100px;
+}
+
+.pokedex > ul > li > div > .type {
+  width: 5rem;
+  height: 5rem;
+}
+
+.wrapper > h2 {
+  text-transform: capitalize;
+  font-size: 1.5em;
+  margin: 10px;
+  text-align: center;
+}
+
+.pokedex > ul > li > div > h2 {
+  text-transform: capitalize;
+  font-size: 1.5em;
+  margin: 10px;
+}
+
+.pokedex > ul > li > div > h3 {
+  padding: .75rem;
+  font-size: 1.25rem;
+}
+
+.pokedex > ul > li > p {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 1rem .75rem;
+  color: #666666;
+}
+
+.pokedex > ul > li > form > div > button {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  margin: .75rem;
+}
+
+.pokedex > ul > li > div > form > button {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  margin: .75rem;
+}
+
+footer {
+  background-color: #333;
+  padding: .75rem;
+  color: white;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: .75rem;
+}
+
+button:hover{
+  transform: translateY(2px);
+}
+
+button:active {
+  transform: translateY(4px);
+}
+
+.favorites-link {
+  margin: 2rem;
+}
+
+.favorites-link > div > a {
+  border: solid #485150 3px;
+  border-radius: 0.75rem;
+  display: flex;
+  justify-content: space-evenly;
+  flex-grow: 2;
+  flex-shrink: 2;
+  font-size: 1.5em;
+  font-weight: bold;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.favorites-link > div > a:hover {
+  transform: translateY(2px);
+}
+
+.favorites-link > div > a:active {
+  transform: translateY(4px);
+}
+
 
