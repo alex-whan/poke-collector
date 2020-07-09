@@ -92,6 +92,13 @@ header > .hero > h1 {
   height: 5rem;
 }
 
+.wrapper > h2 {
+  text-transform: capitalize;
+  font-size: 1.5em;
+  margin: 10px;
+  text-align: center;
+}
+
 .pokedex > ul > li > div > h2 {
   text-transform: capitalize;
   font-size: 1.5em;
@@ -111,6 +118,14 @@ header > .hero > h1 {
 }
 
 .pokedex > ul > li > form > div > button {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  margin: .75rem;
+}
+
+.pokedex > ul > li > div > form > button {
   background-color: black;
   color: white;
   cursor: pointer;
