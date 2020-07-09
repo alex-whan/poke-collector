@@ -28,32 +28,36 @@ app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
 // Home route handler - gets list of all Pokemon
-function getListOfAllPokemon(request, response) {
-  let url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=151';
-  superagent.get(url) // may need query params below
-    .then(resultsFromSuperagent => {
-      let pokemonResultsArray = resultsFromSuperagent.body.results;
-      const finalPokemonArray = pokemonResultsArray.map(pokemon => {
-        return new Pokemon(pokemon);
-      });
-      sortPokemon(finalPokemonArray);
-      response.status(200).render('pages/show.ejs', {
-        pokemonToShow: finalPokemonArray});
-    }).catch(error => console.log(error));
-}
+async function getListOfAllPokemon(request, response) {
+  let promiseArray = [];
+  let finalPokemonArray = [];
+  for(let i = 1; i <= 25; i++){
+    let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+    promiseArray.push(superagent.get(url))
+  }
+
+  await Promise.all(promiseArray).then((pokemonResponses) => {
+    const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
+    finalPokemonArray = pokemon;
+  }).catch(error => console.log(error));
+
+  // sortPokemon(finalPokemonArray);
+  response.status(200).render('pages/show.ejs', {
+    pokemonToShow: finalPokemonArray});
+  }
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
-  let nameCheck = 'SELECT * FROM pokemon WHERE name=$1;';
-  let nameSafeValues = [request.body];
-  client.query(nameCheck, nameSafeValues)
-    .then(nameResults => {
-      if(nameResults.rowCount < 1) {
+  let pokedexNumberCheck = 'SELECT * FROM pokemon WHERE pokedex_number=$1;';
+  let pokedexNumberSafeValues = [request.body.pokedex_number];
+  client.query(pokedexNumberCheck, pokedexNumberSafeValues)
+    .then(pokedexNumberResults => {
+      if(pokedexNumberResults.rowCount < 1) {
 
         // console.log('MY REQUEST BODY:', request.body)
-        let { name, url, pokedex_number, image } = request.body;
-        let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image) VALUES ($1, $2, $3, $4) RETURNING id;';
-        let safeValues = [name, url, pokedex_number, image];
+        let { name, url, pokedex_number, image, type1, type2 } = request.body;
+        let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image, type1, type2) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
+        let safeValues = [name, url, pokedex_number, image, type1, type2];
       
         client.query(sql, safeValues)
           .then(sqlResults => {
@@ -64,6 +68,7 @@ function addPokemonToFavorites(request, response) {
       }
     }).catch(error => console.log(error));
 }
+
 
 // showFavoritePokemon handler - shows list of favorite Pokemon added to database
 function showFavoritePokemon(request, response) {
@@ -96,10 +101,16 @@ function notFound(request, response){
 // Pokemon Constructor function
 function Pokemon(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
-  this.name = info.name ? info.name : 'Name not available.';
-  this.url = info.url ? info.url : 'URL not available.';
+  this.name = info.species.name ? info.species.name : 'Name not available.';
+  this.url = info.species.url ? info.species.url : 'URL not available.';
   this.pokedex_number = this.url.split('/')[this.url.split('/').length - 2];
-  this.image = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedex_number}.png` ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${this.pokedex_number}.png` : placeholderImage;
+  this.image = info.sprites.front_default ? info.sprites.front_default : placeholderImage;
+  this.type1 = info.types[0].type.name ? info.types[0].type.name : 'Type 1 not available.';
+  if(info.types.length > 1){ // checks to see if Pokemon has a second type
+    this.type2 = info.types[1].type.name ? info.types[1].type.name : 'Type 2 not available.';
+  } else {
+    this.type2 = null;
+  }
 };
 
 // Helper function

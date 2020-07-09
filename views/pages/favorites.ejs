@@ -1,15 +1,32 @@
 <%- include('../layout/head.ejs') %>
 <%- include('../layout/header.ejs') %>
 
-<main>
-  <h2 id="favorites">Your Pokemon Collection</h2>
-  <a href="/">Return to Home</a>
+<main class="wrapper">
+  <h2>Your Pokemon Collection</h2>
+  <section class="favorites-link">
+    <div>
+      <a href="/">Return to Home</a>
+    </div>
+  </section>
+  <section class="pokedex" id="pokedex">
     <ul>
       <% favoritePokemon.forEach(pokemon => { %>
-        <li id="poke-card">
-          <h3>#<%= pokemon.pokedex_number %></h3>
-          <h2><%= pokemon.name %></h2>
-          <img class="front-sprite" src="<%= pokemon.image %>" alt="<%= pokemon.name %>" />
+        <li>
+          <div>
+            <h3>#<%= pokemon.pokedex_number %></h3>
+          </div>
+          <div>
+            <h2><%= pokemon.name %></h2>
+          </div>
+          <div>
+          <img src="<%= pokemon.image %>" alt="<%= pokemon.name %>" />
+          </div>
+          <div>
+            <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type1}.png` %>" alt="<%= pokemon.type1 %>" />
+            <% if (pokemon.type2){ %>
+              <img class="type" src="<%= `../../../../public/assets/images/type-icons/${pokemon.type2}.png` %>" alt="<%= pokemon.type2 %>" />
+            <% } %>
+          </div>
           <div>
             <form action="/favorites/<%= pokemon.id %>?_method=DELETE" method="POST">
               <button>X</button>
@@ -17,7 +34,8 @@
           </div>
         </li>
         <% }) %>
-      </ul>
+    </ul>
+  </section>
     </main>
     
 <%- include('../layout/footer.ejs') %>

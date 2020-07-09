@@ -5,5 +5,7 @@ CREATE TABLE pokemon (
   name VARCHAR(255),
   url TEXT,
   pokedex_number VARCHAR(255),
-  image TEXT
+  image TEXT,
+  type1 VARCHAR(255),
+  type2 VARCHAR(255)
 );
