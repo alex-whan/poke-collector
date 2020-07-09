@@ -4,23 +4,29 @@
 }
 
 body {
-  background-color: #F8F8F8;
+  background-color: #EAEAEB;
 }
 
 main {
   margin: 0 auto;
+  background-color: #EAEAEB;
 }
 
 div {
-  border: 2px red solid;
   border-radius: 10px;
+  text-align: center;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-.hero {
+header > * {
+  border-style: border-box;
+  font-family: 'Press Start 2P', cursive;
+}
+
+header > .hero {
   background: url("../assets/images/pokeball-wallpaper.png") center;
   background-size: cover;
   padding: 4rem 2rem;
@@ -30,7 +36,7 @@ html {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-.hero > h1 {
+header > .hero > h1 {
   text-align: center;
   font-size: 4rem;
   padding-bottom: 1rem;
@@ -40,15 +46,16 @@ html {
 .pokedex {
   padding: 2rem;
   max-width: 960px;
-  background-color: #F8F8F8;
+  background-color: inherit;
   margin: 0 auto;
   /* padding-inline-start: 0; */
 }
 
 .pokedex > ul {
-  background-color: royalblue;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1 fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* grid-template-columns: repeat(auto-fit, minmax(240px, 1 fr)); */
   grid-gap: 1rem;
 }
 
@@ -60,25 +67,13 @@ html {
   box-shadow: 3px 3px 5px black;
   color: white;
   margin: 0 auto;
+  margin: 0.75rem;
+  min-width: 280px;
+  width: 290px;
 }
-
-/* .pokedex > ul > li > div {
-  border: 2px solid red;
-  border-radius: .5rem;
-  margin: 0 auto;
-} */
 
 .pokedex > ul > li > div {
   text-align: center;
-  /* padding: 0.2rem; */
-}
-
-.pokedex > ul > li > figure {
-  max-height: 220px;
-  overflow: hidden;
-  border-top-left-radius: .5rem;
-  border-top-right-radius: .5rem;
-  position: relative;
 }
 
 .pokedex > ul > li > div > img {
@@ -120,8 +115,7 @@ html {
   color: white;
   cursor: pointer;
   padding: .5rem 1rem;
-  margin: .5rem;
-  
+  margin: .75rem;
 }
 
 footer {
@@ -141,21 +135,31 @@ button:active {
   transform: translateY(4px);
 }
 
-a:hover {
-  background-color: lightsalmon;
-  transform: translateY(5px);
-} 
+.favorites-link {
+  margin: 2rem;
+}
 
-.pokedex > a:active {
+.favorites-link > div > a {
+  border: solid #485150 3px;
+  border-radius: 0.75rem;
+  display: flex;
+  justify-content: space-evenly;
+  flex-grow: 2;
+  flex-shrink: 2;
+  font-size: 1.5em;
+  font-weight: bold;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.favorites-link > div > a:hover {
+  transform: translateY(2px);
+}
+
+.favorites-link > div > a:active {
   transform: translateY(4px);
 }
 
-/* section > div > a {
-  margin: 0 auto;
-  font-size: 1em;
-}
-
-section > div> a:hover {
-  font-size: 2em;
-} */
 

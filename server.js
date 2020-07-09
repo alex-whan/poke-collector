@@ -31,7 +31,7 @@ app.use('*', notFound);
 async function getListOfAllPokemon(request, response) {
   let promiseArray = [];
   let finalPokemonArray = [];
-  for(let i = 1; i <= 12; i++){
+  for(let i = 1; i <= 25; i++){
     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
     promiseArray.push(superagent.get(url))
   }
