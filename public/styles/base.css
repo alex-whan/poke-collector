@@ -7,6 +7,10 @@ body {
   background-color: #F8F8F8;
 }
 
+main {
+  margin: 0 auto;
+}
+
 div {
   border: 2px red solid;
   border-radius: 10px;
@@ -17,16 +21,17 @@ html {
 }
 
 .hero {
-  background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/278b42da-de8f-48a3-9160-9e37cb8f71d3/d6cy6ch-ae2a1bd6-97a2-490a-8427-476d526f6853.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvMjc4YjQyZGEtZGU4Zi00OGEzLTkxNjAtOWUzN2NiOGY3MWQzXC9kNmN5NmNoLWFlMmExYmQ2LTk3YTItNDkwYS04NDI3LTQ3NmQ1MjZmNjg1My5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.rYHMDW6ZUfuu8KCUfEmER2AOT2t31eeRlJUGkS5c6-Y') center;
+  background: url("../assets/images/pokeball-wallpaper.png") center;
   background-size: cover;
   padding: 4rem 2rem;
 
   display: grid;
-  align-items: center;
+  align-self: center;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
 .hero > h1 {
+  text-align: center;
   font-size: 4rem;
   padding-bottom: 1rem;
 }
@@ -34,22 +39,25 @@ html {
 .pokedex {
   padding: 2rem;
   max-width: 960px;
-  background-color: lawngreen;
+  background-color: #F8F8F8;
+  margin: 0 auto;
+  /* padding-inline-start: 0; */
 }
 
 .pokedex > ul {
   background-color: royalblue;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1 fr));
-  grid-gap: 0.5rem;
+  grid-gap: 1rem;
 }
 
 .pokedex > ul > li {
-  background-color: #485150;
-  color: white;
   align-content: center;
+  background-color: #485150;
   border: 2px solid black;
-  border-radius: .5rem;
+  border-radius: 0.75rem;
+  box-shadow: 3px 3px 5px black;
+  color: white;
   margin: 0 auto;
 }
 
@@ -64,7 +72,7 @@ html {
   /* padding: 0.2rem; */
 }
 
-.breweries > ul > li > figure {
+.pokedex > ul > li > figure {
   max-height: 220px;
   overflow: hidden;
   border-top-left-radius: .5rem;
@@ -133,10 +141,20 @@ button:active {
 }
 
 a:hover {
-  transform: translateY(2px);
-}
+  background-color: lightsalmon;
+  transform: translateY(5px);
+} 
 
-a:active {
+.pokedex > a:active {
   transform: translateY(4px);
 }
+
+/* section > div > a {
+  margin: 0 auto;
+  font-size: 1em;
+}
+
+section > div> a:hover {
+  font-size: 2em;
+} */
 
