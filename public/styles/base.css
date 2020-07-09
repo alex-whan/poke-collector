@@ -1,5 +1,142 @@
+* {
+  border-style: border-box;
+  font-family: 'Press Start 2P', cursive;
+}
+
+body {
+  background-color: #F8F8F8;
+}
+
 div {
-  background-color: aquamarine;
   border: 2px red solid;
+  border-radius: 10px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.hero {
+  background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/278b42da-de8f-48a3-9160-9e37cb8f71d3/d6cy6ch-ae2a1bd6-97a2-490a-8427-476d526f6853.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvMjc4YjQyZGEtZGU4Zi00OGEzLTkxNjAtOWUzN2NiOGY3MWQzXC9kNmN5NmNoLWFlMmExYmQ2LTk3YTItNDkwYS04NDI3LTQ3NmQ1MjZmNjg1My5qcGcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.rYHMDW6ZUfuu8KCUfEmER2AOT2t31eeRlJUGkS5c6-Y') center;
+  background-size: cover;
+  padding: 4rem 2rem;
+
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.hero > h1 {
+  font-size: 4rem;
+  padding-bottom: 1rem;
+}
+
+.pokedex {
+  padding: 2rem;
+  max-width: 960px;
+  background-color: lawngreen;
+}
+
+.pokedex > ul {
+  background-color: royalblue;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1 fr));
+  grid-gap: 0.5rem;
+}
+
+.pokedex > ul > li {
+  background-color: #485150;
+  color: white;
+  align-content: center;
+  border: 2px solid black;
+  border-radius: .5rem;
+  margin: 0 auto;
+}
+
+/* .pokedex > ul > li > div {
+  border: 2px solid red;
+  border-radius: .5rem;
+  margin: 0 auto;
+} */
+
+.pokedex > ul > li > div {
+  text-align: center;
+  /* padding: 0.2rem; */
+}
+
+.breweries > ul > li > figure {
+  max-height: 220px;
+  overflow: hidden;
+  border-top-left-radius: .5rem;
+  border-top-right-radius: .5rem;
+  position: relative;
+}
+
+.pokedex > ul > li > div > img {
+  width: 10rem;
+  height: 10rem;
+  margin: inherit;
+}
+
+.pokedex > ul > li > div > img.type {
+  height: 40px;
+  width: 100px;
+}
+
+.pokedex > ul > li > div > .type {
+  width: 5rem;
+  height: 5rem;
+}
+
+.pokedex > ul > li > div > h2 {
+  text-transform: capitalize;
+  font-size: 1.5em;
+  margin: 10px;
+}
+
+.pokedex > ul > li > div > h3 {
+  padding: .75rem;
+  font-size: 1.25rem;
+}
+
+.pokedex > ul > li > p {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 1rem .75rem;
+  color: #666666;
+}
+
+.pokedex > ul > li > form > div > button {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  margin: .5rem;
+  
+}
+
+footer {
+  background-color: #333;
+  padding: .75rem;
+  color: white;
+  text-align: center;
+  font-family: 'Press Start 2P', cursive;
+  font-size: .75rem;
+}
+
+button:hover{
+  transform: translateY(2px);
+}
+
+button:active {
+  transform: translateY(4px);
+}
+
+a:hover {
+  transform: translateY(2px);
+}
+
+a:active {
+  transform: translateY(4px);
 }
 
