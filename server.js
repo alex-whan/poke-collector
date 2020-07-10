@@ -55,41 +55,62 @@ async function getListOfAllPokemon(request, response) {
   let promiseArray = [];
   let initialPokemonArray = [];
   let finalPokemonArray = [];
-  let url = 'https://pokeapi.co/api/v2/pokemon/?limit=6&offset=0';
+  let url = 'https://pokeapi.co/api/v2/pokemon/?limit=3&offset=0';
   superagent.get(url)
     .then(firstPokemonResultsFromSuperagent => {
       // console.log('THIS IS MY INITIAL DATA BODY: ------ ', firstPokemonResultsFromSuperagent.body);
       // console.log('THIS IS MY INITIAL RESULT: ------', firstPokemonResultsFromSuperagent.body.results);
-      const initialPokemonData = firstPokemonResultsFromSuperagent.body.results.map(pokemon => {
-        return initialPokemonArray.push(pokemon);
+      // let initialPokemonArray = firstPokemonResultsFromSuperagent.body.results;
+      let pokemonData = firstPokemonResultsFromSuperagent.body.results;
+      pokemonData.map(pokemon => {
+        initialPokemonArray.push(pokemon);
       });
 
-    console.log('INITIAL POKEMON ARRAY: ------', initialPokemonArray);
+    console.log('DATA - INITIAL ARRAY ------', initialPokemonArray);
+    // console.log('TYPE?', typeof initialPokemonArray);
+    // console.log('INITIAL POKEMON ARRAY: ------', initialPokemonArray);
   })
-  .then(() => {
-    initialPokemonArray.map(pokemon => {
-      // console.log('This is my second THEN of URLs: ', pokemon.url);
-      let url = pokemon.url;
-      superagent.get(url)
-      .then(secondaryPokemonResultsFromSuperagent => {
-        let pokemonDetails = secondaryPokemonResultsFromSuperagent.body; // details to fill out Pokemon constructor
-        // console.log('SECONDARY RESULTS ____________________ :', pokemonDetails.results);
-        // console.log('INITIAL ARRAY I HOPE: ', initialPokemonArray);
-        let pokemonToCreate = new Pokemon(pokemonDetails);
-        finalPokemonArray.push(pokemonToCreate);
-        // types are: pokemonDetails.types[0].type.name
-        console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
-        return finalPokemonArray;
+    .then(() => {
+      // console.log('INITIAL ARRAY but in THEN ------', initialPokemonArray);
+      initialPokemonArray.map(pokemon => {
+        // console.log('This is my second THEN of URLs: ', pokemon);
+        let url = pokemon.url;
+        // console.log('URL? -----------', url);
+        promiseArray.push(superagent.get(url));
+        // console.log('PROMISE? ------------- ', promiseArray);
+
+        // console.log('URL? -----------', superagent.get(url));
+
+      //   .then(secondaryPokemonResultsFromSuperagent => {
+      //     let pokemonDetails = secondaryPokemonResultsFromSuperagent.body; // details to fill out Pokemon constructor
+      //     // console.log('SECONDARY RESULTS ____________________ :', pokemonDetails.results);
+      //     // console.log('INITIAL ARRAY I HOPE: ', initialPokemonArray);
+      //     let pokemonToCreate = new Pokemon(pokemonDetails);
+      //     finalPokemonArray.push(pokemonToCreate);
+      //     // types are: pokemonDetails.types[0].type.name
+      //     console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
+      //     return finalPokemonArray;
+      //   })
+      // })
+      // console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
       })
+
+      console.log('PROMISE 2? ------------- ', promiseArray);
+
+    }).catch(error => console.log(error));
+
+  await Promise.all(promiseArray)
+    .then((pokemonResponses) => {
+      // console.log('PROMISE in AWAIT? ------- ', promiseArray);
+      // console.log('DATA - INITIAL ARRAY IN PROMISE ALL ------', initialPokemonArray);
+      console.log('RESPONSES?', pokemonResponses);
+      const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
+      finalPokemonArray = pokemon;
     })
-    // console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
+    console.log('This should be the FINAL ARRAY: -------', finalPokemonArray);
     
-  })
-  
-  
-  .catch(error => console.log(error));
-
-
+    response.status(200).render('pages/show.ejs', {
+      pokemonToShow: finalPokemonArray});
 }
 
 
