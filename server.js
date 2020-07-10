@@ -69,26 +69,27 @@ async function getListOfAllPokemon(request, response) {
   })
   .then(() => {
     initialPokemonArray.map(pokemon => {
-      console.log('This is my second THEN of URLs: ', pokemon.url);
+      // console.log('This is my second THEN of URLs: ', pokemon.url);
       let url = pokemon.url;
       superagent.get(url)
       .then(secondaryPokemonResultsFromSuperagent => {
         let pokemonDetails = secondaryPokemonResultsFromSuperagent.body; // details to fill out Pokemon constructor
-        console.log('SECONDARY RESULTS ____________________ :', pokemonDetails.types[0].type.name);
+        // console.log('SECONDARY RESULTS ____________________ :', pokemonDetails.results);
+        // console.log('INITIAL ARRAY I HOPE: ', initialPokemonArray);
+        let pokemonToCreate = new Pokemon(pokemonDetails);
+        finalPokemonArray.push(pokemonToCreate);
         // types are: pokemonDetails.types[0].type.name
-        // secondaryPokemonResultsFromSuperagent.body.map(pokemon => {
-        //   console.log('Pokemon type 1 :', secondaryPokemonResultsFromSuperagent.body.results.types[0].type.name);
-        // })
+        return finalPokemonArray;
       })
     })
-    console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
-
+    console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
+    // console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
+    
   })
   
   
   .catch(error => console.log(error));
 
-// console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
 
 }
 
@@ -146,9 +147,24 @@ function notFound(request, response){
 };
 
 // Pokemon Constructor function
+// function Pokemon(info){
+//   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
+//   this.name = info.species.name ? info.species.name : 'Name not available.';
+//   this.url = info.species.url ? info.species.url : 'URL not available.';
+//   this.pokedex_number = this.url.split('/')[this.url.split('/').length - 2];
+//   this.image = info.sprites.front_default ? info.sprites.front_default : placeholderImage;
+//   this.type1 = info.types[0].type.name ? info.types[0].type.name : 'Type 1 not available.';
+//   if(info.types.length > 1){ // checks to see if Pokemon has a second type
+//     this.type2 = info.types[1].type.name ? info.types[1].type.name : 'Type 2 not available.';
+//   } else {
+//     this.type2 = null;
+//   }
+// };
+
+// Pokemon Constructor function for PAGINATION
 function Pokemon(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
-  this.name = info.species.name ? info.species.name : 'Name not available.';
+  this.name = info.name ? info.name : 'Name not available.';
   this.url = info.species.url ? info.species.url : 'URL not available.';
   this.pokedex_number = this.url.split('/')[this.url.split('/').length - 2];
   this.image = info.sprites.front_default ? info.sprites.front_default : placeholderImage;
@@ -159,6 +175,7 @@ function Pokemon(info){
     this.type2 = null;
   }
 };
+
 
 // Helper function
 const sortPokemon = (arr) => {
