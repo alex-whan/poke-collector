@@ -70,13 +70,15 @@ async function getListOfAllPokemon(request, response) {
   .then(() => {
     initialPokemonArray.map(pokemon => {
       console.log('This is my second THEN of URLs: ', pokemon.url);
-      let url = `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`;
+      let url = pokemon.url;
       superagent.get(url)
       .then(secondaryPokemonResultsFromSuperagent => {
-        console.log('SECONDARY RESULTS ____________________ :', secondaryPokemonResultsFromSuperagent.body.results);
-        secondaryPokemonResultsFromSuperagent.body.results.map(pokemon => {
-          console.log('Pokemon type 1 :', secondaryPokemonResultsFromSuperagent.body.results.types[0].type.name);
-        })
+        let pokemonDetails = secondaryPokemonResultsFromSuperagent.body; // details to fill out Pokemon constructor
+        console.log('SECONDARY RESULTS ____________________ :', pokemonDetails.types[0].type.name);
+        // types are: pokemonDetails.types[0].type.name
+        // secondaryPokemonResultsFromSuperagent.body.map(pokemon => {
+        //   console.log('Pokemon type 1 :', secondaryPokemonResultsFromSuperagent.body.results.types[0].type.name);
+        // })
       })
     })
     console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
@@ -86,7 +88,7 @@ async function getListOfAllPokemon(request, response) {
   
   .catch(error => console.log(error));
 
-
+// console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
 
 }
 
