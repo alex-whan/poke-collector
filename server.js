@@ -48,8 +48,8 @@ function serveThePage(request, response) {
 async function getListOfPokemon(request, response) {
   let promiseArray = [];
 
-  const testOffset = 6;
-  const testPageSize = 15;
+  const testOffset = 1;
+  const testPageSize = 151;
 
   const queryParams = {
     limit: testPageSize,
