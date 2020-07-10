@@ -48,8 +48,8 @@ function serveThePage(request, response) {
 // // Home route handler - gets list of all Pokemon
 async function getListOfPokemon(request, response) {
   let promiseArray = [];
-  const testOffset = 3;
-  const testPageSize = 20;
+  const testOffset = 1;
+  const testPageSize = 25;
 
   for(let i = testOffset; i <= testOffset + testPageSize; i++){
     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
