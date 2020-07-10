@@ -21,15 +21,14 @@ app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 
 // Routes
-app.get('/', serveThePage);
-app.get('/pokemon', getListOfPokemon);
+// app.get('/', serveThePage);
+app.get('/', getListOfPokemon);
 app.post('/add', addPokemonToFavorites);
 app.get('/favorites', showFavoritePokemon);
 app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
-//https://pokeapi.co/api/v2/pokemon/?limit=6
-
+// Page server handler
 function serveThePage(request, response) {
   response.status(200).render('pages/show.ejs', {
     pokemonToShow: []}); // shouldn't need this
@@ -45,99 +44,35 @@ function serveThePage(request, response) {
   // All app is trying to do is render data
   // Each button does a new request (don't need to append data for now)
 
-// // Home route handler - gets list of all Pokemon
+// Home route handler - gets list of Pokemon
 async function getListOfPokemon(request, response) {
   let promiseArray = [];
-  const testOffset = 1;
-  const testPageSize = 25;
 
-  for(let i = testOffset; i <= testOffset + testPageSize; i++){
+  const testOffset = 1;
+  const testPageSize = 15;
+
+  const queryParams = {
+    limit: testPageSize,
+    offset: testOffset
+  }
+  
+  for(let i = testOffset; i <= testPageSize; i++){
     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-    promiseArray.push(superagent.get(url))
+    promiseArray.push(superagent.get(url).query(queryParams));
+    // console.log('query params for this search :', queryParams);
+    // console.log('PROMISE ARRAY:', promiseArray);
+    // Much slower with query Params
+    // Query Params are firing every single time, slowing it down - how do I get query Params into the search itself?
   }
 
   const pokemonResponses = await Promise.all(promiseArray);
   const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
   
-    // .then((pokemonResponses) => {
-    //   finalPokemonArray = pokemon;
-    // }).catch(error => console.log(error));
-
-  // sortPokemon(finalPokemonArray);
   response.status(200).render('pages/show.ejs',
   {
     pokemonToShow: pokemon
   });
 }
-
-
-
-// // // Attempt at pagination
-// async function getListOfAllPokemon(request, response) {
-//   let promiseArray = [];
-//   let initialPokemonArray = [];
-//   let finalPokemonArray = [];
-//   let url = 'https://pokeapi.co/api/v2/pokemon/?limit=3&offset=0';
-//   superagent.get(url)
-//     .then(firstPokemonResultsFromSuperagent => {
-//       // console.log('THIS IS MY INITIAL DATA BODY: ------ ', firstPokemonResultsFromSuperagent.body);
-//       // console.log('THIS IS MY INITIAL RESULT: ------', firstPokemonResultsFromSuperagent.body.results);
-//       // let initialPokemonArray = firstPokemonResultsFromSuperagent.body.results;
-//       let pokemonData = firstPokemonResultsFromSuperagent.body.results;
-//       pokemonData.map(pokemon => {
-//         let url = pokemon.url;
-//         initialPokemonArray.push(pokemon);
-//         promiseArray.push(superagent.get(url));
-//       });
-      
-//     console.log('PROMISES IN FIRST CALL ------------', promiseArray);
-//     console.log('DATA - INITIAL ARRAY ------', initialPokemonArray);
-//     // console.log('TYPE?', typeof initialPokemonArray);
-//     // console.log('INITIAL POKEMON ARRAY: ------', initialPokemonArray);
-//   })
-//     .then(() => {
-//       // console.log('INITIAL ARRAY but in THEN ------', initialPokemonArray);
-//       initialPokemonArray.map(pokemon => {
-//         // console.log('This is my second THEN of URLs: ', pokemon);
-//         let url = pokemon.url;
-//         // console.log('URL? -----------', url);
-//         promiseArray.push(superagent.get(url));
-//         // console.log('PROMISE? ------------- ', promiseArray);
-
-//         // console.log('URL? -----------', superagent.get(url));
-
-//       //   .then(secondaryPokemonResultsFromSuperagent => {
-//       //     let pokemonDetails = secondaryPokemonResultsFromSuperagent.body; // details to fill out Pokemon constructor
-//       //     // console.log('SECONDARY RESULTS ____________________ :', pokemonDetails.results);
-//       //     // console.log('INITIAL ARRAY I HOPE: ', initialPokemonArray);
-//       //     let pokemonToCreate = new Pokemon(pokemonDetails);
-//       //     finalPokemonArray.push(pokemonToCreate);
-//       //     // types are: pokemonDetails.types[0].type.name
-//       //     console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
-//       //     return finalPokemonArray;
-//       //   })
-//       // })
-//       // console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
-//       })
-
-//       // console.log('PROMISE 2? ------------- ', promiseArray);
-
-//     }).catch(error => console.log(error));
-
-//   await Promise.all(promiseArray)
-//     .then((pokemonResponses) => {
-//       // console.log('PROMISE in AWAIT? ------- ', promiseArray);
-//       // console.log('DATA - INITIAL ARRAY IN PROMISE ALL ------', initialPokemonArray);
-//       // console.log('RESPONSES?', pokemonResponses);
-//       const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
-//       finalPokemonArray = pokemon;
-//     })
-//     console.log('This should be the FINAL ARRAY: -------', finalPokemonArray);
-    
-//     response.status(200).render('pages/show.ejs', {
-//       pokemonToShow: finalPokemonArray});
-// }
-
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
@@ -161,7 +96,6 @@ function addPokemonToFavorites(request, response) {
       }
     }).catch(error => console.log(error));
 }
-
 
 // showFavoritePokemon handler - shows list of favorite Pokemon added to database
 function showFavoritePokemon(request, response) {
