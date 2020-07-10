@@ -49,7 +49,6 @@ app.use('*', notFound);
 //     pokemonToShow: finalPokemonArray});
 //   }
 
-
 // // Attempt at pagination
 
 async function getListOfAllPokemon(request, response) {
@@ -79,10 +78,10 @@ async function getListOfAllPokemon(request, response) {
         let pokemonToCreate = new Pokemon(pokemonDetails);
         finalPokemonArray.push(pokemonToCreate);
         // types are: pokemonDetails.types[0].type.name
+        console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
         return finalPokemonArray;
       })
     })
-    console.log('This should be the FINAL ARRAY: ', finalPokemonArray);
     // console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
     
   })
