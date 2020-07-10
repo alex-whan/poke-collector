@@ -48,7 +48,7 @@ function serveThePage(request, response) {
 async function getListOfPokemon(request, response) {
   let promiseArray = [];
 
-  const testOffset = 1;
+  const testOffset = 6;
   const testPageSize = 15;
 
   const queryParams = {
