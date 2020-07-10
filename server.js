@@ -27,24 +27,69 @@ app.get('/favorites', showFavoritePokemon);
 app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
-// Home route handler - gets list of all Pokemon
+//https://pokeapi.co/api/v2/pokemon/?limit=6
+
+// // Home route handler - gets list of all Pokemon
+// async function getListOfAllPokemon(request, response) {
+//   let promiseArray = [];
+//   let finalPokemonArray = [];
+//   for(let i = 1; i <= 12; i++){
+//     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
+//     promiseArray.push(superagent.get(url))
+//   }
+
+//   await Promise.all(promiseArray)
+//     .then((pokemonResponses) => {
+//       const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
+//       finalPokemonArray = pokemon;
+//     }).catch(error => console.log(error));
+
+//   // sortPokemon(finalPokemonArray);
+//   response.status(200).render('pages/show.ejs', {
+//     pokemonToShow: finalPokemonArray});
+//   }
+
+
+// // Attempt at pagination
+
 async function getListOfAllPokemon(request, response) {
   let promiseArray = [];
+  let initialPokemonArray = [];
   let finalPokemonArray = [];
-  for(let i = 1; i <= 151; i++){
-    let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-    promiseArray.push(superagent.get(url))
-  }
+  let url = 'https://pokeapi.co/api/v2/pokemon/?limit=6&offset=0';
+  superagent.get(url)
+    .then(firstPokemonResultsFromSuperagent => {
+      // console.log('THIS IS MY INITIAL DATA BODY: ------ ', firstPokemonResultsFromSuperagent.body);
+      // console.log('THIS IS MY INITIAL RESULT: ------', firstPokemonResultsFromSuperagent.body.results);
+      const initialPokemonData = firstPokemonResultsFromSuperagent.body.results.map(pokemon => {
+        return initialPokemonArray.push(pokemon);
+      });
 
-  await Promise.all(promiseArray).then((pokemonResponses) => {
-    const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
-    finalPokemonArray = pokemon;
-  }).catch(error => console.log(error));
+    console.log('INITIAL POKEMON ARRAY: ------', initialPokemonArray);
+  })
+  .then(() => {
+    initialPokemonArray.map(pokemon => {
+      console.log('This is my second THEN of URLs: ', pokemon.url);
+      let url = `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`;
+      superagent.get(url)
+      .then(secondaryPokemonResultsFromSuperagent => {
+        console.log('SECONDARY RESULTS ____________________ :', secondaryPokemonResultsFromSuperagent.body.results);
+        secondaryPokemonResultsFromSuperagent.body.results.map(pokemon => {
+          console.log('Pokemon type 1 :', secondaryPokemonResultsFromSuperagent.body.results.types[0].type.name);
+        })
+      })
+    })
+    console.log('here it is again boys in the THEN!!: ------', initialPokemonArray);
 
-  // sortPokemon(finalPokemonArray);
-  response.status(200).render('pages/show.ejs', {
-    pokemonToShow: finalPokemonArray});
-  }
+  })
+  
+  
+  .catch(error => console.log(error));
+
+
+
+}
+
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
