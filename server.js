@@ -49,8 +49,8 @@ function serveThePage(request, response) {
 async function getListOfPokemon(request, response) {
   let promiseArray = [];
 
-  let testOffset = 152;
-  let testPageSize = 40;
+  let testOffset = 1;
+  let testPageSize = 151;
 
   const queryParams = {
     limit: testPageSize,
@@ -78,9 +78,7 @@ async function getListOfPokemon(request, response) {
 
 // Search results handler
 function getSearchResults(request, response){
-  let query = request.query.search;
-  console.log('QUERY SEARCH VALUE ONLY :', request.query.search);
-  // let normalizedQuery = query).toLowerCase;
+  let query = (request.query.search).toLowerCase();
   const url = `https://pokeapi.co/api/v2/pokemon/${query}`;
 
   superagent.get(url)
