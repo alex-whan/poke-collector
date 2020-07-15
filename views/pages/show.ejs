@@ -2,9 +2,21 @@
 <%- include('../layout/header.ejs') %>
 
   <main class="wrapper">
+    <section>
+      <div>
+        <form action="/search" method="GET">
+          <input type="text" name="search" placeholder="Search for a Pokemon" required/>
+          <button class="button" type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
     <section class="favorites-link">
       <div>
         <a href="/favorites">See Your Favorites</a>
+      </div>
+      <div>
+        <button type="submit" id="leftButton">Previous Page</button>
+        <button type="submit" id="rightButton">Next Page</button>
       </div>
     </section>
     <section class="pokedex" id="pokedex">
