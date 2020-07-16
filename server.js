@@ -87,7 +87,7 @@ function getSearchResults(request, response){
         {
           pokemonToShow: pokemon,
         });
-      } else if (error) {
+      } else if (req.notFound) {
         response.status(200).render('pages/no-results.ejs', { query: query });
       }
     }).catch(error => console.log(error));
