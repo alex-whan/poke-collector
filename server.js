@@ -14,6 +14,7 @@ const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+
 // Application middleware
 app.use(express.urlencoded({extended: true}));
 app.use('/public', express.static('public'));
@@ -21,30 +22,56 @@ app.set('view engine', 'ejs');
 app.use(methodOverride('_method'));
 
 // Routes
-app.get('/', getListOfAllPokemon);
+app.get('/', getListOfPokemon);
+app.get('/search', getSearchResults);
 app.post('/add', addPokemonToFavorites);
 app.get('/favorites', showFavoritePokemon);
 app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
-// Home route handler - gets list of all Pokemon
-async function getListOfAllPokemon(request, response) {
+// Home route handler - gets list of Pokemon
+async function getListOfPokemon(request, response) {
   let promiseArray = [];
-  let finalPokemonArray = [];
-  for(let i = 1; i <= 151; i++){
+
+  let testOffset = 1;
+  let testPageSize = 151;
+
+  const queryParams = {
+    limit: testPageSize,
+    offset: testOffset
+  }
+  
+  for(let i = testOffset; i <= testOffset + testPageSize - 1; i++){
     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
-    promiseArray.push(superagent.get(url))
+    promiseArray.push(superagent.get(url));
   }
 
-  await Promise.all(promiseArray).then((pokemonResponses) => {
-    const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
-    finalPokemonArray = pokemon;
-  }).catch(error => console.log(error));
+  const pokemonResponses = await Promise.all(promiseArray);
+  const pokemon = pokemonResponses.map(({body}) => new Pokemon(body));
+  
+  response.status(200).render('pages/show.ejs',
+  {
+    pokemonToShow: pokemon
+  });
+}
 
-  // sortPokemon(finalPokemonArray);
-  response.status(200).render('pages/show.ejs', {
-    pokemonToShow: finalPokemonArray});
-  }
+// Search results handler
+function getSearchResults(request, response){
+  let query = (request.query.search).toLowerCase();
+  const url = `https://pokeapi.co/api/v2/pokemon/${query}`;
+
+    superagent.get(url)
+    .then(searchResults => {
+      const pokemon =  [new Pokemon(searchResults.body)];
+      response.status(200).render('pages/show.ejs',
+        {
+          pokemonToShow: pokemon,
+        });
+    }).catch(error => {
+      response.status(200).render('pages/no-results.ejs', { query: query }); 
+    });
+  
+}
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
 function addPokemonToFavorites(request, response) {
@@ -54,7 +81,6 @@ function addPokemonToFavorites(request, response) {
     .then(pokedexNumberResults => {
       if(pokedexNumberResults.rowCount < 1) {
 
-        // console.log('MY REQUEST BODY:', request.body)
         let { name, url, pokedex_number, image, type1, type2 } = request.body;
         let sql = 'INSERT INTO pokemon (name, url, pokedex_number, image, type1, type2) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;';
         let safeValues = [name, url, pokedex_number, image, type1, type2];
@@ -68,7 +94,6 @@ function addPokemonToFavorites(request, response) {
       }
     }).catch(error => console.log(error));
 }
-
 
 // showFavoritePokemon handler - shows list of favorite Pokemon added to database
 function showFavoritePokemon(request, response) {
@@ -101,7 +126,7 @@ function notFound(request, response){
 // Pokemon Constructor function
 function Pokemon(info){
   const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
-  this.name = info.species.name ? info.species.name : 'Name not available.';
+  this.name = info.name ? info.name : 'Name not available.';
   this.url = info.species.url ? info.species.url : 'URL not available.';
   this.pokedex_number = this.url.split('/')[this.url.split('/').length - 2];
   this.image = info.sprites.front_default ? info.sprites.front_default : placeholderImage;

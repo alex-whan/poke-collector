@@ -2,6 +2,14 @@
 <%- include('../layout/header.ejs') %>
 
   <main class="wrapper">
+    <section>
+      <div>
+        <form action="/search" method="GET">
+          <input class="search-form" type="text" name="search" placeholder="Search for a Pokemon" required/>
+          <button class="button" type="submit">Submit</button>
+        </form>
+      </div>
+    </section>
     <section class="favorites-link">
       <div>
         <a href="/favorites">See Your Favorites</a>
