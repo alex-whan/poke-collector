@@ -14,6 +14,7 @@ const methodOverride = require('method-override');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+
 // Application middleware
 app.use(express.urlencoded({extended: true}));
 app.use('/public', express.static('public'));
@@ -54,43 +55,22 @@ async function getListOfPokemon(request, response) {
   });
 }
 
-// function getSearchResults(request, response){
-//   let query = (request.query.search).toLowerCase();
-//   const url = `https://pokeapi.co/api/v2/pokemon/${query}`;
-
-//   if(superagent.get(url)){
-//     superagent.get(url)
-//     .then(searchResults => {
-//         const pokemon =  [new Pokemon(searchResults.body)];
-//         response.status(200).render('pages/show.ejs',
-//         {
-//           pokemonToShow: pokemon,
-//         });
-//     }).catch(error => console.log(error));
-    
-//   } else {
-//         response.status(200).render('pages/no-results.ejs', { query: query });
-//       }
-// }
-
 // Search results handler
 function getSearchResults(request, response){
   let query = (request.query.search).toLowerCase();
   const url = `https://pokeapi.co/api/v2/pokemon/${query}`;
 
-  superagent.get(url)
+    superagent.get(url)
     .then(searchResults => {
-      console.log('SEARCH RESULTS ------------- ', searchResults);
-      if (searchResults.body.length !== 0){
-        const pokemon =  [new Pokemon(searchResults.body)];
-        response.status(200).render('pages/show.ejs',
+      const pokemon =  [new Pokemon(searchResults.body)];
+      response.status(200).render('pages/show.ejs',
         {
           pokemonToShow: pokemon,
         });
-      } else if (req.notFound) {
-        response.status(200).render('pages/no-results.ejs', { query: query });
-      }
-    }).catch(error => console.log(error));
+    }).catch(error => {
+      response.status(200).render('pages/no-results.ejs', { query: query }); 
+    });
+  
 }
 
 // addPokemonToFavorites handler - adds favorite Pokemon to database
