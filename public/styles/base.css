@@ -192,4 +192,8 @@ button:active {
   transform: translateY(4px);
 }
 
-
+main > div > .oak {
+  width: 8rem;
+  height: 11rem;
+  margin: inherit;
+}
