@@ -1,9 +1,16 @@
 <%- include('../layout/head.ejs') %>
 <%- include('../layout/header.ejs') %>
 
-<main>
+<main class="wrapper"> 
   <h2>Sorry, no results for: "<%=query%>". Check with Professor Oak.</h2>
-  <a href="/">Return to Home</a>
+  <div>
+    <img class="oak" src="../../public/assets/images/oak.png" alt="Professor Oak" />
+  </div>
+  <section class="favorites-link">
+    <div>
+      <a href="/">Return to Home</a>
+    </div>
+  </section>
   <section class="favorites-link">
     <div>
       <a href="/favorites">See Your Favorites</a>
