@@ -4,11 +4,11 @@
   "description": "pokecollector",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha _tests/nightmare.js",
+    "test": "jshint server.js",
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Alex Whan",
   "license": "ISC",
   "dependencies": {
     "dotenv": "8.2.0",
@@ -22,6 +22,7 @@
     "chai": "4.2.0",
     "mocha": "7.1.1",
     "nightmare": "3.0.2",
-    "start-server-and-test": "1.11.0"
+    "start-server-and-test": "1.11.0",
+    "jshint": "^2.11.1"
   }
 }
