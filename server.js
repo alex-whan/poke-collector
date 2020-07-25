@@ -1,4 +1,5 @@
 'use strict';
+/*jslint node: true*/
 
 // Dependencies
 require('dotenv').config();
@@ -30,7 +31,7 @@ app.delete('/favorites/:id', deletePokemonFromFavorites);
 app.use('*', notFound);
 
 // Home route handler - gets list of Pokemon
-async function getListOfPokemon(request, response) {
+async function getListOfPokemon(request, response) { // jshint ignore: line
   let promiseArray = [];
 
   let testOffset = 1;
@@ -39,7 +40,7 @@ async function getListOfPokemon(request, response) {
   const queryParams = {
     limit: testPageSize,
     offset: testOffset
-  }
+  };
   
   for(let i = testOffset; i <= testOffset + testPageSize - 1; i++){
     let url = `https://pokeapi.co/api/v2/pokemon/${i}`;
@@ -114,14 +115,14 @@ function deletePokemonFromFavorites(request, response){
   let safeValues = [pokemonID];
   client.query(sql, safeValues)
     .then(() => {
-      response.status(200).redirect('/favorites')
+      response.status(200).redirect('/favorites');
     }).catch(error => console.log(error));
 }
 
 // Error - 404 Not Found page
 function notFound(request, response){
   response.status(404).render('pages/error.ejs');
-};
+}
 
 // Pokemon Constructor function
 function Pokemon(info){
@@ -136,14 +137,14 @@ function Pokemon(info){
   } else {
     this.type2 = null;
   }
-};
+}
 
 // Helper function
 const sortPokemon = (arr) => {
   arr.sort((a, b) => {
     return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1;
-  })
-}
+  });
+};
 
 // Turns on server and connects to Postgres client
 const client = new pg.Client(process.env.DATABASE_URL);
@@ -152,6 +153,6 @@ client.connect()
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Listening on ${PORT}`);
-    })
+    });
   }).catch(error => console.log(error));
 
