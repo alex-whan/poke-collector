@@ -48,14 +48,12 @@ header > .hero > h1 {
   max-width: 960px;
   background-color: inherit;
   margin: 0 auto;
-  /* padding-inline-start: 0; */
 }
 
 .pokedex > ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  /* grid-template-columns: repeat(auto-fit, minmax(240px, 1 fr)); */
   grid-gap: 1rem;
 }
 
