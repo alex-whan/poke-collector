@@ -8,6 +8,8 @@
 
 **Version:** 1.0.0
 
+## [LIVE LINK](https://poke-collector.herokuapp.com/)
+
 ## Overview
 
 This is a full-stack application built using [PokéAPI](https://pokeapi.co/), inspired by the nostalgia of Pokémon from my childhood and throughout my lifetime. Browse, search, and add Pokemon to your collection of favorites! Each Pokémon is displayed with their National Pokédex number, name, sprite, and typings. Hit "Add to Favorites" to save a Pokémon into your own personal team. You'll be able to delete them from your "Favorites" list at any time by hitting the "X" button listed under each Pokémon in your collection.
